@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spendy</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0; 
+            height: 100%;
+            overflow: hidden;
+            width:100%;
+            font-family: sans-serif;
+            background-color: #8ABCBD;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 30px; 
+        }
+
+        .btn {
+            background-color: #9DBB69;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px; 
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #indextext {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            color: white;
+            text-align: center;
+            font-family: 'PT Serif', serif;
+        }
+        .header .col-xl-6 img {  
+            max-width: 25rem;  /* Control the maximum width of the image */
+            margin: 0 auto;    /* Centers the image horizontally */
+        }
+        .bottom-img {
+            max-width: 100%;   
+            height: 20rem;      
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <header  class="header">
+        <div class="row">
+            <div class="col-xl-6 col-6 p-4 ps-5 d-flex align-items-center">
+                <img src="http://drive.google.com/thumbnail?id=1B1NrtczC9zKQpVhaW7954dIPvllFV1Ox" alt="GrocerBuddy Logo" class="mb-3">
+            </div>       
+    </header>
+    
+    <section class="col-12">
+        <div class="col-xl-12 text">
+            <h1 id="indextext">Welcome, <br> Your journey to financial freedom <br> starts here.</h1>
+        </div>
+    </section>
+    <div class="container d-flex flex-column justify-content-center align-items-center">
+        <h1 class="text-white"></h1> 
+        <button class="btn btn-light" onclick="window.location.href='https://spendy.auth.us-east-1.amazoncognito.com/login?client_id=4l49rpb61kjc0k7k3n23ftmrc7&response_type=token&scope=aws.cognito.signin.user.admin+email+openid&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fhome'">DIVE IN</button>
+    </div>
+    <div class="col-xl-10 col-6">
+        <img src="http://drive.google.com/thumbnail?id=1BzIdp61aoHiNTeLPtrSzJXeutInZaEk4" alt="GrocerBuddy Logo" class="bottom-img mb-3">
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

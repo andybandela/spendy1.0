@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            padding: 8px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Fill the form</h2>
+        <form action="submit.php" method="POST">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <input type="submit" value="Confirm">
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+<div>
+    <button class="btn" onclick="location.href='https://spendy.auth.us-east-1.amazoncognito.com/logout?client_id=4l49rpb61kjc0k7k3n23ftmrc7&logout_uri=http%3A%2F%2Flocalhost%3A8000'">Logout</button>
+</div>  
+<section class="col-12">
+    <div class="col-xl-12 text">
+        <h1 id="indextext"> UPLOAD RECEIPT.</h1>
+    </div>
+</section>
+
+<div class="upload-container" id="upload-container">
+   
+    <input id="file" type="file" name="file" accept="image/*"/>
+    <input class="upload-btn" type="submit" value="Upload"
+           onclick="spendy()"/>
+    <a href="http://127.0.0.1:8000/home" class="cancel-btn">Cancel</a>
+</div>

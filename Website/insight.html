@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights Webpage</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            width:100%; 
+            font-family: sans-serif;
+            background-color: #8ABCBD;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px; 
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .logo-container {
+            max-width: 25rem;
+        }
+
+        .btn {
+            background-color: #9DBB69;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px; 
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #indextext {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            color: white;
+            text-align: center;
+            font-family: 'PT Serif', serif;
+        }
+
+        #signoutBtn {
+            margin: 9px;
+            box-shadow: 0px 4px 8px rgba(0, 22, 72, 0.1);
+        }
+
+        #logoin{
+            max-width:40%; 
+            padding-bottom: 10px; 
+            margin-top: -21px;
+        }
+
+        /* Floating button */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            border-radius: 25px;
+            background-color: #9DBB69;
+            color: white;
+            padding: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: width 0.3s;
+            width: 60px;
+            text-align: center;
+            line-height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .floating-button:hover {
+            width: 150px;
+            background-color: #9DBB69; /* Keep background color white */
+        }
+
+        .button-text {
+            display: none;
+            color: white; 
+        }
+
+        .floating-button:hover .button-text {
+            display: block;
+            margin-left: 10px;
+        }
+
+        #camera-icon {
+            fill: white; 
+        }
+        .insights-card {
+            background-color: white;
+            border-radius: 25px;
+            padding: 20px; 
+            margin-bottom: 20px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header" style="width: 100%;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <a href="index.html"><img src="http://drive.google.com/thumbnail?id=1B1NrtczC9zKQpVhaW7954dIPvllFV1Ox" class="img-fluid rounded-circle" id="logoin"></a>
+                </div>
+                <div class="col-md-6 text-right ">
+                    <button class="btn btn-outline-light" id="signoutBtn" onclick="location.href='https://spendy.auth.us-east-1.amazoncognito.com/logout?client_id=4l49rpb61kjc0k7k3n23ftmrc7&logout_uri=http%3A%2F%2Flocalhost%3A8000'">Sign Out</button> 
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="insights-card">
+                    <h2>Purchase History</h2>
+                    <table id="tableRows" class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Vendor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="insights-card">
+                    <h2>Most Bought</h2>
+                    <p id="mostBought"></p>
+                    <p id="totalSpent"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating button -->
+    <button class="floating-button" onclick="location.href='http://localhost:8000/upload'" >
+        <span class="button-text">Upload Receipt</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16" id="camera-icon">
+            <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4z"/>
+            <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5m0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+        </svg>
+    </button>
+    <script>
+        const loc = window.location;
+        const url = loc['href']
+        //const token = url.match(/\#(?:id_token)\=([\S\s]*?)\&/)[1];
+        //const access = url.match(/&access_token=([^&]+)/)[1];
+        let token;
+        let access;
+        if (url.startsWith("http://localhost:8000/home#id_token=")) {
+            // Extracting token and access_token using regex
+            console.log('Setting cookie')
+            token = url.match(/\#(?:id_token)\=([\S\s]*?)\&/)[1];
+            access = url.match(/&access_token=([^&]+)/)[1];
+            document.cookie = "token ="+ access+"; path=/";
+            localStorage.setItem('token',access);
+            console.log('cookie set')
+            console.log(access)
+        } else if(url.startsWith("http://localhost:8000/home#")){
+            const regex = /http:\/\/localhost:8000\/home#(.*)/;
+            access =url.match(regex);
+            console.log('Second option');
+            console.log(access);
+
+        }
+        else {
+            // Access should be equal to everything after the '#'
+            console.log('Get cookie')
+            access = getCookie('token');
+            accss = localStorage.getItem('token')
+            if (access == null){
+                const regex = /http:\/\/localhost:8000\/home#(.*)/;
+                access =url.match(regex);
+            }
+            console.log(access);
+        }
+        console.log(access)
+        fetch(serverUrl+"/token",{
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({token: token, access: access, 'acc':accss})
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new HttpError(response);
+                }
+            })
+
+        async function sendToken(access) {
+            return location.href="http://127.0.0.1:8000/upload/"+access
+        }
+
+        function getCookie(name) {
+            // Split all cookies into an array
+            const cookies = document.cookie.split(';');
+
+            // Loop through each cookie
+            for (let i = 0; i < cookies.length; i++) {
+                // Split cookie into name and value
+                const cookie = cookies[i].trim().split('=');
+
+                // Check if the name matches the requested name
+                if (cookie[0] === name) {
+                    // Return the cookie value
+                    return decodeURIComponent(cookie[1]);
+                }
+            }
+
+            // If cookie not found, return null
+            return null;
+        }
+    </script>
+   <script>
+const serverUrl = "http://127.0.0.1:8000";
+
+window.onload = function() {
+    let access_tkn = localStorage.getItem('token')
+    if (access_tkn == null){
+        const url = window.location.href;
+        const tokenRegex = /token=([^&]+)/;
+        const match = url.match(tokenRegex);
+        if (match) {
+            access_tkn = match[1];
+            console.log('Token:', access_tkn);
+        } else {
+        // Check if the token is in the localStorage
+            access_tkn = localStorage.getItem('token');
+            console.log('Cookie:', access_tkn);
+        }
+    }
+    
+
+    
+
+    // Check if the token is in the URL
+    
+
+    if (access_tkn) {
+        fetch(serverUrl + "/insight/" + access_tkn)
+            .then(response => response.json())
+            .then(data => {
+                const tableRows = document.getElementById("tableRows");
+                data.table.forEach(row => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${row.date}</td>
+                        <td>${row.item}</td>
+                        <td>${row.price}</td>
+                        <td>${row.vendor}</td>
+                    `;
+                    tableRows.appendChild(tr);
+                });
+
+                document.getElementById("mostBought").innerText = "Most bought item: " + data.item;
+                document.getElementById("totalSpent").innerText = "Total spent on " + data.item + ": $" + data.total;
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });
+    } else {
+        console.error("Token not found in URL or localStorage.");
+    }
+};
+   </script>
+
+<!--  <script>
+
+        const serverUrl = "http://127.0.0.1:8000";
+        window.onload = function() {
+            //let access_tkn = getCookie('token');
+            const urlParams = new URLSearchParams(window.location.search);
+            let access_tkn = urlParams.get('token');
+            console.log('Cookie')
+            if (access_tkn == null){
+                access_tkn = localStorage.getItem('token');
+            }
+            console.log(access_tkn)
+            fetch(serverUrl + "/insight/"+access_tkn)
+                .then(response => response.json())
+                .then(data => {
+                    
+                    const tableRows = document.getElementById("tableRows");
+                    data.table.forEach(row => {
+                        const tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td>${row.date}</td>
+                            <td>${row.item}</td>
+                            <td>${row.price}</td>
+                            <td>${row.vendor}</td>
+                        `;
+                        tableRows.appendChild(tr);
+                    });
+
+                    
+                    document.getElementById("mostBought").innerText = "Most bought item: " + data.item;
+                    document.getElementById("totalSpent").innerText = "Total spent on " + data.item + ": $" + data.total;
+                    
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        };
+
+    </script>--> 
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

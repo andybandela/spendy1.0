@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights Webpage</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            width:100%; 
+            font-family: sans-serif;
+            background-color: #8ABCBD;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px; 
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .logo-container {
+            max-width: 25rem;
+        }
+
+        .btn {
+            background-color: #9DBB69;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px; 
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #indextext {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            color: white;
+            text-align: center;
+            font-family: 'PT Serif', serif;
+        }
+
+        #signoutBtn {
+            margin: 9px;
+        }
+
+        #logoin{
+            min-width:30%; 
+            padding-bottom: 10px; 
+            margin-top: -21px;
+        }
+
+        /* Custom styles for upload form */
+        .upload-container {
+            width: 500px;
+            height: 400px;
+            border: 2px dashed #ccc;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            margin-top: 50px;
+            position: relative;
+            transition: border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            justify-content: center;
+        }
+
+        .upload-container.drag-over {
+            border-color: #4CAF50;
+        }
+
+        .upload-text {
+            margin-bottom: 20px;
+        }
+
+        .browse-btn, .upload-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .cancel-btn{
+            background-color: #FF204E;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            /* display: inline-block; */
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-box {
+            width: 90px;
+            height: 90px;
+            background-color: white;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: border-color 0.3s ease;
+        }
+
+        #file-icon {
+            width: 50px;
+            height: auto;
+        }
+
+        .upload-container.drag-over .file-box {
+            border-color: #4CAF50;
+        }
+
+        .divider {
+            width: 80%;
+            border-bottom: 1px dotted #ccc;
+            margin-bottom: 20px;
+        }
+
+                /* Floating button */
+                .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            border-radius: 25px;
+            background-color: #9DBB69;
+            color: white;
+            padding: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: width 0.3s;
+            width: 60px;
+            text-align: center;
+            line-height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .floating-button:hover {
+            width: 150px;
+            background-color: #9DBB69; /* Keep background color white */
+        }
+
+        .button-text {
+            display: none;
+            color: white; 
+        }
+
+        .floating-button:hover .button-text {
+            display: block;
+            margin-left: 10px;
+        }
+
+        #camera-icon {
+            fill: white; 
+        }
+
+    </style>
+    <script>
+        
+
+
+        
+
+    
+        
+    </script>
+</head>
+<body>
+    <header class="header" style="width: 100%;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 ">
+                    <a href="index.html"><img src="http://drive.google.com/thumbnail?id=1B1NrtczC9zKQpVhaW7954dIPvllFV1Ox" class="img-fluid rounded-circle" id="logoin"></a>
+                </div>
+                <div class="col-md-6 text-right ">
+                    <button class="btn btn-outline-light" id="signoutBtn" onclick="location.href='https://spendy.auth.us-east-1.amazoncognito.com/logout?client_id=4l49rpb61kjc0k7k3n23ftmrc7&logout_uri=http%3A%2F%2Flocalhost%3A8000'">Sign Out</button> 
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div style="min-width:400px">
+           
+    
+            <div class="upload-container">
+                <p class="w3-opacity"><b>Upload</b></p>
+                <input id="file" type="file" name="file" accept="image/*"/>
+                <input class="upload-btn" type="submit" value="Upload" onclick="spendy()"/>
+                <button class="cancel-btn" onclick="location.href='https://spendy.auth.us-east-1.amazoncognito.com/logout?client_id=4l49rpb61kjc0k7k3n23ftmrc7&logout_uri=http%3A%2F%2Flocalhost%3A8000'">Logout</button>
+    
+            </div>
+        </div>
+        
+    </main>
+    <button class="floating-button" onclick="home()" >
+        <span class="button-text">View Insights</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-data" viewBox="0 0 16 16">
+            <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z"/>
+            <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z"/>
+            <path d="M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 0-1 1v3a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1"/>
+          </svg>
+    </button>
+    <script>
+        "use strict";
+        let loc = window.location;
+        let url = loc['href']
+        let tok = url.match(/\/upload\/(.*)/);
+        let token = tok.replace(/\/upload\//, "");
+        let serverUrl = "http://127.0.0.1:8000";
+        console.log(url)
+        console.log()
+        console.log(token)
+        console.log()
+        window.onload = async function() {
+            loc = window.location;
+            url = loc['hred'];
+            tok = url.match(/\/upload\/(.*)/);
+            token = tok.replace(/\/upload\//, "");
+            serverUrl = "http://127.0.0.1:8000";
+        }
+        
+        
+    </script>
+    <script>
+        function getCookie(name) {
+            // Split all cookies into an array
+            const cookies = document.cookie.split(';');
+
+            // Loop through each cookie
+            for (let i = 0; i < cookies.length; i++) {
+                // Split cookie into name and value
+                const cookie = cookies[i].trim().split('=');
+
+                // Check if the name matches the requested name
+                if (cookie[0] === name) {
+                    // Return the cookie value
+                    return decodeURIComponent(cookie[1]);
+                }
+            }
+
+            // If cookie not found, return null
+            return null;
+        }
+        async function uploadImage(serverUrl) {
+            // encode input file as base64 string for upload
+            let file = document.getElementById("file").files[0];
+            let converter = new Promise(function(resolve, reject) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result
+                    .toString().replace(/^data:(.*,)?/, ''));
+                reader.onerror = (error) => reject(error);
+            });
+            let encodedString = await converter;
+            
+        
+            document.getElementById("file").value = "";
+            return fetch(serverUrl + "/images", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({filename: file.name, filebytes: encodedString})
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new HttpError(response);
+                }
+            })
+        }
+
+        async function analyze(image_info,serverUrl){
+            return fetch(serverUrl+"/analyse",{
+                method: "POST",
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({filename:image_info["fileId"]})
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new HttpError(response);
+                }
+            })
+        }
+
+        async function addReceipt(receipt,serverUrl,token){
+            return fetch(serverUrl+"/add",{
+                method: "POST",
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({receipt:receipt,tkn:token})
+            })
+        }
+
+        async function home(){
+            return location.href="http://127.0.0.1:8000/home#token="+localStorage.getItem('token');
+        }
+
+        async function spendy() {
+            try {
+                const url = 'http://127.0.0.1:8000';
+                let token = getCookie('token');
+                console.log('Getting cookie');
+                console.log(token);
+                if (token == null) {
+                    token = localStorage.getItem('token')
+                    console.log(token);
+                }
+                const imageInfo = await uploadImage(url);
+                const receiptDetails = await analyze(imageInfo, url);
+                await addReceipt(receiptDetails, url, token);
+                // Redirect to the insights page with the token
+                location.href = `http://127.0.0.1:8000/home?token=${token}`;
+            } catch (error) {
+                console.error('Error in spendy function:', error);
+                // Handle any errors that occurred during the process
+            }
+        }
+
+
+       /* async function spendy(url,tok) {
+            uploadImage(url)
+                .then(image_info => analyze(image_info,url))
+                .then(receipt_details => addReceipt(receipt_details,url,tok))
+        }*/ 
+    </script>
+    
+    
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+</body>
+</html>

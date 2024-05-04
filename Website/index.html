@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Spendy</title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+</head>
+
+<body class="w3-theme-14">
+    <div style="min-width:400px">
+        <div class="w3-bar w3-large w3-theme-d4">
+            <span class="w3-bar-item">Spendy</span>
+        </div>
+
+        <div class="w3-container w3-content">
+            <p class="w3-opacity"><b>Upload</b></p>
+            <input id="file" type="file" name="file" accept="image/*"/>
+            <input class="w3-button w3-blue-grey" type="submit" value="Upload"
+                   onclick="spendy()"/>
+
+        </div>
+    </div>
+    <div>
+        <button class="btn" onclick="location.href='https://spendy.auth.us-east-1.amazoncognito.com/logout?client_id=4l49rpb61kjc0k7k3n23ftmrc7&logout_uri=http%3A%2F%2Flocalhost%3A8000'">Logout</button>
+    </div>
+
+    <script type="text/javascript">
+        "use strict";
+        const loc = window.location;
+        const url = loc['href']
+        const token = url.match(/\#(?:id_token)\=([\S\s]*?)\&/)[1];
+        const access = url.match(/&access_token=([^&]+)/)[1];
+        const serverUrl = "http://127.0.0.1:8000";
+        console.log(url)
+        console.log(token)
+        console.log()
+        console.log(access)
+
+        async function sendToken() {
+            return fetch(serverUrl+"/token",{
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({token: token})
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new HttpError(response);
+                }
+            })
+        }
+
+        async function uploadImage() {
+            // encode input file as base64 string for upload
+            let file = document.getElementById("file").files[0];
+            let converter = new Promise(function(resolve, reject) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result
+                    .toString().replace(/^data:(.*,)?/, ''));
+                reader.onerror = (error) => reject(error);
+            });
+            let encodedString = await converter;
+        
+            // clear file upload input field
+            document.getElementById("file").value = "";
+        
+            // make server call to upload image
+            // and return the server upload promise
+            return fetch(serverUrl + "/images", {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({filename: file.name, filebytes: encodedString, token:token})
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new HttpError(response);
+                }
+            })
+        }
+
+        async function analyze(image_info){
+            return fetch(serverUrl+"/analyse",{
+                method: "POST",
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({filename:image_info["fileId"]})
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new HttpError(response);
+                }
+            })
+        }
+
+        async function addReceipt(receipt){
+            return fetch(serverUrl+"/add",{
+                method: "POST",
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({receipt:receipt,tkn:access})
+            })
+        }
+
+        async function getReceipt(){}
+
+        async function spendy() {
+            uploadImage()
+                .then(image_info => analyze(image_info))
+                .then(receipt_details => addReceipt(receipt_details))
+        }
+        fetch(serverUrl+"/token",{
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({token: token, access: access})
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new HttpError(response);
+                }
+            })
+    </script>
+</body>
+
+</html>
